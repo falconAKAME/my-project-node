@@ -1,38 +1,33 @@
-/* Основные переменные для удобства */
+/* ===== 1. Базовые настройки и переменные ===== */
 :root {
     --bg-color: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.7);
+    --card-bg: rgba(30, 41, 59, 0.85);
     --accent-color: #8b5cf6;
     --accent-hover: #7c3aed;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --success: #22c55e;
-    --danger: #ef4444;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x: hidden;
 }
 
-/* Шапка и заголовки */
+/* ===== 2. Заголовок и Форма Входа ===== */
 .hero {
     text-align: center;
     padding: 40px 20px;
-    animation: fadeInDown 0.8s ease-out;
+    width: 100%;
+    max-width: 600px;
 }
 
 h1 {
@@ -41,10 +36,8 @@ h1 {
     background: linear-gradient(to right, #a78bfa, #f472b6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* Форма входа */
 .login-container {
     background: var(--card-bg);
     backdrop-filter: blur(12px);
@@ -55,134 +48,115 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 100%;
-    max-width: 400px;
-    animation: zoomIn 0.5s ease-out;
 }
 
 .input-field {
-    padding: 12px 16px;
-    border-radius: 10px;
+    padding: 18px;
+    border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(15, 23, 42, 0.6);
     color: white;
+    font-size: 1.1rem;
     outline: none;
     transition: var(--transition);
 }
 
-.input-field:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
-}
+.input-field:focus { border-color: var(--accent-color); }
 
-/* Кнопки */
 .btn {
-    padding: 12px 24px;
-    border-radius: 10px;
+    padding: 18px;
+    border-radius: 12px;
     border: none;
     cursor: pointer;
     font-weight: 600;
-    transition: var(--transition);
+    font-size: 1rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    transition: var(--transition);
 }
-
-.btn:active { transform: scale(0.95); }
 
 .secondary { background: var(--accent-color); color: white; }
-.secondary:hover { background: var(--accent-hover); box-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
-
 .dark { background: #334155; color: white; }
-.dark:hover { background: #475569; }
 
-/* Навигация */
+/* ===== 3. Навигация (Логика скрытия) ===== */
 #main-nav {
+    display: none;
     margin-top: 20px;
     gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
-/* Таблица и Контент */
+/* Показываем кнопки только после скрытия формы логина */
+#login-block[style*="display: none"] ~ #main-nav {
+    display: flex !important;
+}
+
+/* ===== 4. ТАБЛИЦА (Адаптивная классика) ===== */
 #content {
-    width: 90%;
+    width: 95%;
     max-width: 900px;
-    margin: 30px auto;
-    animation: fadeInUp 0.6s ease-out;
+    margin: 20px auto;
 }
 
-table {
+/* Обертка для таблицы, чтобы она не вылезала за края на очень узких экранах */
+#content table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 8px; /* Расстояние между строками */
-    margin-top: 20px;
-}
-
-th {
-    padding: 15px;
-    text-align: left;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    text-transform: uppercase;
+    border-spacing: 0 8px;
+    table-layout: fixed; /* Позволяет управлять шириной колонок */
 }
 
 tr {
     background: var(--card-bg);
-    transition: var(--transition);
 }
 
-tr:hover {
-    transform: translateY(-3px) scale(1.01);
-    background: rgba(51, 65, 85, 0.8);
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+th, td {
+    padding: 15px 10px;
+    text-align: left;
+    word-wrap: break-word; /* Перенос длинных слов */
 }
 
-td {
-    padding: 15px;
-    border: none;
+/* Закругляем края строк */
+td:first-child { border-radius: 12px 0 0 12px; width: 50px; }
+td:last-child { border-radius: 0 12px 12px 0; width: 60px; text-align: center; }
+
+th { color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; }
+
+td a {
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    line-height: 1.4;
 }
 
-td:first-child { border-radius: 12px 0 0 12px; }
-td:last-child { border-radius: 0 12px 12px 0; }
+/* ===== 5. МОБИЛЬНЫЕ СТИЛИ (Full Screen и Масштаб) ===== */
+@media screen and (max-width: 768px) {
+    .hero {
+        min-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
-a {
-    transition: var(--transition);
-    position: relative;
-}
+    h1 { font-size: 2rem; }
 
-a:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
-    background-color: currentColor;
-    transition: var(--transition);
-}
+    .login-container { padding: 40px 15px; }
 
-a:hover:after { width: 100%; }
+    #main-nav {
+        flex-direction: column;
+        width: 100%;
+    }
 
-/* Анимации */
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    .btn { width: 100%; padding: 20px; font-size: 1.1rem; }
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    /* Таблица на мобильных */
+    th, td {
+        padding: 12px 8px;
+        font-size: 0.9rem; /* Чуть уменьшаем шрифт, чтобы всё влезло */
+    }
 
-@keyframes zoomIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* Адаптивность */
-@media (max-width: 600px) {
-    h1 { font-size: 1.8rem; }
-    .login-container { width: 95%; }
-    td, th { padding: 10px; font-size: 0.85rem; }
-    #main-nav { flex-direction: column; width: 100%; align-items: stretch; }
+    td:first-child { width: 35px; } /* Колонка с номером поуже */
+    td:last-child { width: 50px; }  /* Колонка со статусом поуже */
+    
+    td a {
+        font-size: 1rem;
+    }
 }
