@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>KALYS Parser</title>
+    <link rel="stylesheet" href="style.css">
+</head> 
+<body>
+    <header class="hero">
+        <h1>Задачи сайта Калыс</h1>
+        <form>
+        <div id="login-block" class="login-container">
+            <input type="text" id="username"  placeholder="Логин" class="input-field">
+            <input type="password" id="password" placeholder="Пароль" class="input-field">
+            <button type="button" onclick="login(event)" class="btn secondary">Войти</button>
+        </div>
+  </form>
+        <nav id="main-nav" style="display: none;">
+            <button onclick="showHome()" class="btn">Выйти</button>
+            <button onclick="loadTasks()" class="btn secondary">Все задачи</button>
+            <button onclick="loadSolved()" class="btn dark">Выполненные</button>
+        </nav>
+  
+    </header>
+
+    <main id="content"></main>
+
+    <script src="script.js"></script>
+</body>
+</html>
